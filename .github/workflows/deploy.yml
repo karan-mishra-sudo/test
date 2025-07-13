@@ -1,40 +1,29 @@
 name: CI/CD for Static Website
 
-# Trigger the workflow on push to the main branch
 on:
   push:
     branches:
       - main
 
-# Define permissions for deployment
 permissions:
   contents: write
 
-# Define jobs
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Step 2: Validate HTML
-      - name: Validate HTML
+      - name: Validate HTML and CSS
         uses: Cyb3r-Jak3/html5validator-action@v7.2.0
         with:
           root: ./
-          css: false  # Skip CSS validation for now
+          css: true
+          log_level: INFO
 
-      # Step 3: Validate CSS
-      - name: Validate CSS
-        uses: Cerberus/validate-css-action@1.0.0
-        with:
-          files: ./**/*.css  # Validate all CSS files
-
-      # Step 4: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./  # Directory containing HTML/CSS files
+          publish_dir: ./
