@@ -1,0 +1,5 @@
+INFO:html5validator.cli:Files to validate: 
+  ./index.html
+  ./style.css
+INFO:html5validator.cli:Number of files: 2
+INFO:html5validator.validator:All good.
